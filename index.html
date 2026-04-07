@@ -1,0 +1,465 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Eduardo — Desenvolvedor Front-end</title>
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+
+  <!-- ═══════════════════════════ NAV ═══════════════════════════ -->
+  <nav class="nav" id="nav">
+    <div class="nav__container">
+      <a href="#" class="nav__logo">
+        <span class="nav__logo-icon">E</span>
+        <span>Eduardo<strong>.dev</strong></span>
+      </a>
+      <ul class="nav__links">
+        <li><a href="#about" class="nav__link">Sobre</a></li>
+        <li><a href="#projects" class="nav__link">Projetos</a></li>
+        <li><a href="#testimonials" class="nav__link">Depoimentos</a></li>
+        <li><a href="#contact" class="nav__cta">Fale Comigo</a></li>
+      </ul>
+      <button class="nav__burger" id="burger" aria-label="Menu">
+        <span></span><span></span><span></span>
+      </button>
+    </div>
+  </nav>
+
+  <!-- mobile menu -->
+  <div class="mobile-menu" id="mobileMenu">
+    <ul>
+      <li><a href="#about"        class="nav__link mobile-link">Sobre</a></li>
+      <li><a href="#projects"     class="nav__link mobile-link">Projetos</a></li>
+      <li><a href="#testimonials" class="nav__link mobile-link">Depoimentos</a></li>
+      <li><a href="#contact"      class="nav__link mobile-link">Contato</a></li>
+    </ul>
+  </div>
+
+  <!-- ═══════════════════════════ HERO ═══════════════════════════ -->
+  <section class="hero" id="hero">
+
+    <div class="hero__bg">
+      <img
+        src="https://images.unsplash.com/photo-1552664730-d307ca884978?w=1920&q=80"
+        alt="Sessão de trabalho criativo e colaborativo"
+        class="hero__bg-img"
+      />
+      <div class="hero__bg-overlay"></div>
+    </div>
+
+    <div class="hero__content">
+      <h1 class="hero__title reveal">
+        Olá, eu sou Eduardo —<br />
+        <span class="hero__title-gradient">Desenvolvedor Front-end.</span>
+      </h1>
+
+      <p class="hero__subtitle reveal">
+        Cursando Engenharia de Software no Inatel. Transformo ideias em
+        interfaces elegantes, funcionais e de alto desempenho.
+      </p>
+
+      <div class="hero__actions reveal">
+        <a href="#contact" class="btn btn--primary">
+          <span>Fale Comigo</span>
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+        </a>
+      </div>
+    </div>
+
+    <div class="hero__scroll">
+      <div class="hero__scroll-line"></div>
+      <span>Scroll</span>
+    </div>
+  </section>
+
+  <!-- ══════════════════════════ SOBRE ══════════════════════════ -->
+  <section class="about" id="about">
+    <div class="container">
+      <div class="about__grid">
+
+        <div class="about__left reveal">
+          <p class="section-label">Sobre Mim</p>
+          <h2 class="section-title">Código limpo,<br /><span class="gradient-text">soluções elegantes.</span></h2>
+
+          <div class="about__badge">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 10v6M2 10l10-5 10 5-10 5z"/><path d="M6 12v5c3 3 9 3 12 0v-5"/></svg>
+            Engenharia de Software — Inatel
+          </div>
+
+          <p class="about__bio">
+            Sou um desenvolvedor focado em transformar ideias em experiências digitais
+            <strong>fluidas e eficientes</strong>. Minha trajetória é marcada pela busca
+            constante por otimização de código e pela criação de interfaces que não sejam
+            apenas visualmente atraentes, mas também <strong>intuitivas para o usuário final</strong>.
+          </p>
+          <p class="about__bio">
+            Acredito que um bom software é aquele que resolve problemas complexos através de
+            soluções simples e elegantes — onde a precisão técnica encontra o design funcional.
+          </p>
+
+          <p class="skills__label">Stack técnico</p>
+          <div class="skills__chips">
+            <span class="skill-chip skill-chip--primary">HTML5</span>
+            <span class="skill-chip skill-chip--primary">CSS3</span>
+            <span class="skill-chip skill-chip--primary">JavaScript ES6+</span>
+            <span class="skill-chip">Git &amp; GitHub</span>
+            <span class="skill-chip">VS Code</span>
+            <span class="skill-chip">Design Responsivo</span>
+            <span class="skill-chip">UX/UI</span>
+            <span class="skill-chip">Metodologias Ágeis</span>
+          </div>
+        </div>
+
+        <div class="about__right reveal">
+          <div class="deliverables">
+
+            <div class="deliverable-card">
+              <div class="deliverable-card__icon">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="16 18 22 12 16 6"/><polyline points="8 6 2 12 8 18"/></svg>
+              </div>
+              <div>
+                <h4>Código Limpo</h4>
+                <p>Desenvolvimento focado em manutenibilidade, performance e boas práticas. Cada linha tem um propósito.</p>
+              </div>
+            </div>
+
+            <div class="deliverable-card">
+              <div class="deliverable-card__icon">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="5" y="2" width="14" height="20" rx="2"/><line x1="12" y1="18" x2="12.01" y2="18"/></svg>
+              </div>
+              <div>
+                <h4>Interfaces Responsivas</h4>
+                <p>Sites que funcionam perfeitamente em qualquer dispositivo, do desktop ao smartphone, sem comprometer a experiência.</p>
+              </div>
+            </div>
+
+            <div class="deliverable-card">
+              <div class="deliverable-card__icon">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+              </div>
+              <div>
+                <h4>Comprometimento</h4>
+                <p>Visão técnica sólida aliada à vontade de aprender e implementar as tecnologias mais recentes do mercado.</p>
+              </div>
+            </div>
+
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- ══════════════════════════ PROJECTS ══════════════════════════ -->
+  <section class="projects" id="projects">
+    <div class="container">
+      <div class="section-header reveal">
+        <p class="section-label">Portfólio</p>
+        <h2 class="section-title">Meus <span class="gradient-text">Projetos</span></h2>
+        <p class="section-desc">Projetos que combinam precisão técnica com design funcional — do zero à entrega.</p>
+      </div>
+
+      <div class="projects__filters reveal">
+        <button class="filter-btn active" data-filter="all">Todos</button>
+        <button class="filter-btn" data-filter="web">Front-end</button>
+        <button class="filter-btn" data-filter="js">JavaScript</button>
+        <button class="filter-btn" data-filter="branding">Branding</button>
+      </div>
+
+      <div class="projects__grid" id="projectsGrid">
+
+        <!-- Card 1 — Exatec (tall, branding) -->
+        <article class="project-card project-card--tall reveal" data-category="branding">
+          <div class="project-card__visual project-card__visual--2">
+            <div class="brand-circle">
+              <svg width="64" height="64" viewBox="0 0 64 64">
+                <polygon points="32,8 56,44 8,44" fill="none" stroke="rgba(255,255,255,0.5)" stroke-width="2"/>
+                <polygon points="32,18 48,44 16,44" fill="rgba(255,255,255,0.1)"/>
+                <circle cx="32" cy="38" r="4" fill="white"/>
+              </svg>
+              <p class="brand-name">EXATEC</p>
+            </div>
+          </div>
+          <div class="project-card__body">
+            <div class="project-card__tags">
+              <span class="tag tag--brand">Branding</span>
+              <span class="tag tag--web">Web</span>
+            </div>
+            <h3 class="project-card__title">Exatec — Identidade & Site</h3>
+            <p class="project-card__desc">Arquitetura da marca Exatec do zero: identidade visual, guidelines e site institucional responsivo.</p>
+            <a href="https://exatec-8f347.web.app/" target="_blank" rel="noopener noreferrer" class="project-card__link">
+              Ver projeto
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+            </a>
+          </div>
+        </article>
+
+        <!-- Card 2 — Landing page (web) -->
+        <article class="project-card reveal" data-category="web">
+          <div class="project-card__visual project-card__visual--1">
+            <div class="project-card__mockup">
+              <div class="mockup-bar"><span></span><span></span><span></span></div>
+              <div class="mockup-lines">
+                <div class="ml ml--90"></div><div class="ml ml--60"></div>
+                <div class="ml ml--75"></div><div class="ml ml--45"></div>
+                <div class="ml ml--80"></div>
+              </div>
+            </div>
+          </div>
+          <div class="project-card__body">
+            <div class="project-card__tags">
+              <span class="tag tag--web">HTML/CSS</span>
+              <span class="tag tag--ux">UX/UI</span>
+            </div>
+            <h3 class="project-card__title">Landing Page Minimalista</h3>
+            <p class="project-card__desc">Landing page de alta conversão desenvolvida com HTML, CSS e JS puro — sem frameworks ou dependências.</p>
+            <a href="#" class="project-card__link">
+              Ver projeto
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+            </a>
+          </div>
+        </article>
+
+        <!-- Card 3 — Task Manager (js) -->
+        <article class="project-card reveal" data-category="js">
+          <div class="project-card__visual project-card__visual--3">
+            <div class="project-card__phone">
+              <div class="phone-notch"></div>
+              <div class="phone-screen">
+                <div class="ps-header"></div>
+                <div class="ps-card"></div>
+                <div class="ps-row"><div class="ps-dot"></div><div class="ps-line"></div></div>
+                <div class="ps-row"><div class="ps-dot"></div><div class="ps-line"></div></div>
+                <div class="ps-row"><div class="ps-dot"></div><div class="ps-line"></div></div>
+              </div>
+            </div>
+          </div>
+          <div class="project-card__body">
+            <div class="project-card__tags">
+              <span class="tag tag--app">JavaScript</span>
+              <span class="tag tag--ios">LocalStorage</span>
+            </div>
+            <h3 class="project-card__title">Task Manager App</h3>
+            <p class="project-card__desc">Gerenciador de tarefas com drag & drop, filtros e persistência via localStorage. 100% vanilla JS.</p>
+            <a href="#" class="project-card__link">
+              Ver projeto
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+            </a>
+          </div>
+        </article>
+
+        <!-- Card 4 — Component Kit (web, CSS) -->
+        <article class="project-card reveal" data-category="web">
+          <div class="project-card__visual project-card__visual--4">
+            <div class="motion-graphic">
+              <div class="mg-circle mg-circle--1"></div>
+              <div class="mg-circle mg-circle--2"></div>
+              <div class="mg-circle mg-circle--3"></div>
+            </div>
+          </div>
+          <div class="project-card__body">
+            <div class="project-card__tags">
+              <span class="tag tag--web">CSS3</span>
+              <span class="tag tag--print">Design System</span>
+            </div>
+            <h3 class="project-card__title">UI Component Kit</h3>
+            <p class="project-card__desc">Biblioteca de 20+ componentes reutilizáveis em CSS puro, com variáveis customizáveis e documentação.</p>
+            <a href="#" class="project-card__link">
+              Ver projeto
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+            </a>
+          </div>
+        </article>
+
+        <!-- Card 5 — Dashboard (wide, js) -->
+        <article class="project-card project-card--wide reveal" data-category="js">
+          <div class="project-card__visual project-card__visual--5">
+            <div class="wide-ui">
+              <div class="wide-sidebar">
+                <div class="ws-item ws-item--active"></div>
+                <div class="ws-item"></div>
+                <div class="ws-item"></div>
+                <div class="ws-item"></div>
+              </div>
+              <div class="wide-content">
+                <div class="wc-header"></div>
+                <div class="wc-grid">
+                  <div class="wc-card"></div>
+                  <div class="wc-card"></div>
+                  <div class="wc-card"></div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="project-card__body">
+            <div class="project-card__tags">
+              <span class="tag tag--web">JavaScript</span>
+              <span class="tag tag--saas">Dashboard</span>
+            </div>
+            <h3 class="project-card__title">Dashboard Acadêmico</h3>
+            <p class="project-card__desc">Dashboard de acompanhamento acadêmico com gráficos nativos, filtros dinâmicos e design system minimalista.</p>
+            <a href="#" class="project-card__link">
+              Ver projeto
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+            </a>
+          </div>
+        </article>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- ══════════════════════════ TESTIMONIALS ══════════════════════════ -->
+  <section class="testimonials" id="testimonials">
+    <div class="container">
+      <div class="section-header reveal">
+        <p class="section-label">Depoimentos</p>
+        <h2 class="section-title">O que dizem sobre <span class="gradient-text">meu trabalho</span></h2>
+        <p class="section-desc">Feedback de professores, colegas e clientes com quem tive o prazer de colaborar.</p>
+      </div>
+
+      <div class="testimonials__track-wrapper">
+        <div class="testimonials__track" id="testimonialsTrack">
+
+          <div class="tcard">
+            <div class="tcard__header">
+              <div class="tcard__avatar" style="--av-color: #06b6d4">R</div>
+              <div class="tcard__author">
+                <strong>Rodrigo Benfato</strong>
+                <span>Fundador — Exatec</span>
+              </div>
+              <div class="tcard__rating"><span>★★★★★</span></div>
+            </div>
+            <p class="tcard__quote">"Trabalhar com Eduardo no desenvolvimento da Exatec foi extraordinário. Ele capturou a essência da marca de uma forma que nem eu conseguia descrever. Entrega impecável."</p>
+            <div class="tcard__tag">Branding & Web</div>
+          </div>
+
+          <div class="tcard">
+            <div class="tcard__header">
+              <div class="tcard__avatar" style="--av-color: #10b981">L</div>
+              <div class="tcard__author">
+                <strong>Luigui Di Lazzaro</strong>
+                <span>Colega de Projeto — Inatel</span>
+              </div>
+              <div class="tcard__rating"><span>★★★★★</span></div>
+            </div>
+            <p class="tcard__quote">"Eduardo é um parceiro incrível. Organizado, proativo e com uma capacidade absurda de transformar um problema complexo em algo simples e funcional."</p>
+            <div class="tcard__tag">Projeto Acadêmico</div>
+          </div>
+
+        </div>
+
+        <div class="testimonials__controls">
+          <button class="tctl tctl--prev" id="tPrev" aria-label="Anterior">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 12H5M12 19l-7-7 7-7"/></svg>
+          </button>
+          <div class="testimonials__dots" id="tDots"></div>
+          <button class="tctl tctl--next" id="tNext" aria-label="Próximo">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+          </button>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ══════════════════════════ CONTACT ══════════════════════════ -->
+  <section class="contact" id="contact">
+    <div class="container">
+      <div class="contact__grid">
+
+        <div class="contact__info reveal">
+          <p class="section-label">Contato</p>
+          <h2 class="section-title">Vamos construir algo <span class="gradient-text">juntos</span></h2>
+          <p class="contact__desc">Tem um projeto, ideia ou oportunidade? Manda uma mensagem — respondo em até 24h.</p>
+
+          <div class="contact__items">
+            <div class="contact__item">
+              <div class="contact__item-icon">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
+              </div>
+              <div>
+                <strong>Email</strong>
+                <a href="mailto:junqueiraeduardo2@gmail.com" class="contact__email-link">junqueiraeduardo2@gmail.com</a>
+              </div>
+            </div>
+          </div>
+
+          <div class="contact__socials">
+            <a href="https://github.com/junqueiraeduardo-dev" target="_blank" rel="noopener noreferrer" class="social-btn" aria-label="GitHub">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 00-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0020 4.77 5.07 5.07 0 0019.91 1S18.73.65 16 2.48a13.38 13.38 0 00-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 005 4.77a5.44 5.44 0 00-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 009 18.13V22"/></svg>
+            </a>
+          </div>
+        </div>
+
+        <div class="contact__form-wrapper reveal">
+          <form class="contact__form" id="contactForm" novalidate>
+            <div class="form__row">
+              <div class="form__group">
+                <label for="name">Seu nome</label>
+                <input type="text" id="name" name="name" placeholder="João Silva" required />
+                <span class="form__error" id="nameError"></span>
+              </div>
+              <div class="form__group">
+                <label for="email">Email</label>
+                <input type="email" id="email" name="email" placeholder="joao@email.com" required />
+                <span class="form__error" id="emailError"></span>
+              </div>
+            </div>
+            <div class="form__group">
+              <label for="service">Tipo de projeto</label>
+              <div class="form__select-wrapper">
+                <select id="service" name="service">
+                  <option value="">Selecione uma opção</option>
+                  <option value="landing">Landing Page</option>
+                  <option value="site">Site Institucional</option>
+                  <option value="webapp">Web App / Dashboard</option>
+                  <option value="ui">UI/UX Design</option>
+                  <option value="other">Outro</option>
+                </select>
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg>
+              </div>
+            </div>
+            <div class="form__group">
+              <label for="message">Mensagem</label>
+              <textarea id="message" name="message" rows="5" placeholder="Conte-me sobre seu projeto ou ideia..." required></textarea>
+              <span class="form__error" id="messageError"></span>
+            </div>
+            <button type="submit" class="btn btn--primary btn--full" id="submitBtn">
+              <span id="submitText">Enviar mensagem</span>
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+            </button>
+
+            <div class="form__success" id="formSuccess">
+              <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 11.08V12a10 10 0 11-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>
+              <h3>Mensagem enviada!</h3>
+              <p>Entrarei em contato em breve.</p>
+            </div>
+          </form>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══════════════════════════ FOOTER ═══════════════════════════ -->
+  <footer class="footer">
+    <div class="container">
+      <div class="footer__top">
+        <a href="#" class="nav__logo footer__logo">
+          <span class="nav__logo-icon">E</span>
+          <span>Eduardo<strong>.dev</strong></span>
+        </a>
+        <p class="footer__tagline">Desenvolvendo o futuro, uma linha de cada vez.</p>
+      </div>
+      <div class="footer__bottom">
+        <span>© 2026 Eduardo. Todos os direitos reservados.</span>
+        <span>Feito com ♥ em Santa Rita do Sapucaí</span>
+      </div>
+    </div>
+  </footer>
+
+  <script src="script.js"></script>
+</body>
+</html>
