@@ -640,7 +640,13 @@
   }
 
   swap();
-  setInterval(swap, delay);
+  let timer = setInterval(swap, delay);
+
+  container.addEventListener('click', () => {
+    clearInterval(timer);
+    swap();
+    timer = setInterval(swap, delay);
+  });
 })();
 
 /* ══ 14. BACK TO TOP ══ */
