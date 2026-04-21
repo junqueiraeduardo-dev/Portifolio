@@ -20,7 +20,7 @@
       <ul class="nav__links">
         <li><a href="#about" class="nav__link">Sobre</a></li>
         <li><a href="#projects" class="nav__link">Projetos</a></li>
-        <li><a href="#testimonials" class="nav__link">Depoimentos</a></li>
+        <li><a href="#process" class="nav__link">Processo</a></li>
         <li><a href="#contact" class="nav__cta">Fale Comigo</a></li>
       </ul>
       <button class="nav__burger" id="burger" aria-label="Menu">
@@ -32,10 +32,10 @@
   <!-- mobile menu -->
   <div class="mobile-menu" id="mobileMenu">
     <ul>
-      <li><a href="#about"        class="nav__link mobile-link">Sobre</a></li>
-      <li><a href="#projects"     class="nav__link mobile-link">Projetos</a></li>
-      <li><a href="#testimonials" class="nav__link mobile-link">Depoimentos</a></li>
-      <li><a href="#contact"      class="nav__link mobile-link">Contato</a></li>
+      <li><a href="#about"    class="nav__link mobile-link">Sobre</a></li>
+      <li><a href="#projects" class="nav__link mobile-link">Projetos</a></li>
+      <li><a href="#process"  class="nav__link mobile-link">Processo</a></li>
+      <li><a href="#contact"  class="nav__link mobile-link">Contato</a></li>
     </ul>
   </div>
 
@@ -210,55 +210,65 @@
     </div>
   </section>
 
-  <!-- ══════════════════════════ TESTIMONIALS ══════════════════════════ -->
-  <section class="testimonials" id="testimonials">
+  <!-- ══════════════════════════ PROCESSO ══════════════════════════ -->
+  <section class="process" id="process">
     <div class="container">
       <div class="section-header reveal">
-        <p class="section-label">Depoimentos</p>
-        <h2 class="section-title scroll-float">O que dizem sobre <span class="gradient-text">meu trabalho</span></h2>
-        <p class="section-desc">O que as pessoas que trabalharam comigo disseram.</p>
+        <p class="section-label">Como trabalho</p>
+        <h2 class="section-title scroll-float">Do brief ao <span class="gradient-text">produto final</span></h2>
+        <p class="section-desc">Cada projeto segue um processo claro — sem improviso, sem surpresas.</p>
       </div>
 
-      <div class="testimonials__track-wrapper">
-        <div class="testimonials__track" id="testimonialsTrack">
+      <div class="process__grid">
 
-          <div class="tcard">
-            <div class="tcard__header">
-              <div class="tcard__avatar" style="--av-color: #06b6d4">R</div>
-              <div class="tcard__author">
-                <strong>Rodrigo Benfato</strong>
-                <span>Fundador — Exatec</span>
-              </div>
-              <div class="tcard__rating"><span>★★★★★</span></div>
-            </div>
-            <p class="tcard__quote">"Eduardo foi além do que eu esperava. Entendia o que eu queria mesmo quando eu não sabia explicar direito. O resultado ficou muito melhor do que eu imaginava."</p>
-            <div class="tcard__tag">Branding & Web</div>
+        <div class="process__card reveal">
+          <span class="process__bg-num">01</span>
+          <div class="process__icon">
+            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8">
+              <path d="M3 18v-6a9 9 0 0 1 18 0v6"/>
+              <path d="M21 19a2 2 0 0 1-2 2h-1a2 2 0 0 1-2-2v-3a2 2 0 0 1 2-2h3zM3 19a2 2 0 0 0 2 2h1a2 2 0 0 0 2-2v-3a2 2 0 0 0-2-2H3z"/>
+            </svg>
           </div>
-
-          <div class="tcard">
-            <div class="tcard__header">
-              <div class="tcard__avatar" style="--av-color: #10b981">L</div>
-              <div class="tcard__author">
-                <strong>Luigui Di Lazzaro</strong>
-                <span>Colega de Projeto — Inatel</span>
-              </div>
-              <div class="tcard__rating"><span>★★★★★</span></div>
-            </div>
-            <p class="tcard__quote">"Trabalhar com o Eduardo foi tranquilo do começo ao fim. Ele é organizado, não enrola e entrega o que promete."</p>
-            <div class="tcard__tag">Projeto Acadêmico</div>
-          </div>
-
+          <h3 class="process__title">Entender</h3>
+          <p class="process__desc">Ouço o que você precisa, o contexto do projeto e quem vai usar. Sem clareza no início, o código perde o rumo.</p>
         </div>
 
-        <div class="testimonials__controls">
-          <button class="tctl tctl--prev" id="tPrev" aria-label="Anterior">
-            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 12H5M12 19l-7-7 7-7"/></svg>
-          </button>
-          <div class="testimonials__dots" id="tDots"></div>
-          <button class="tctl tctl--next" id="tNext" aria-label="Próximo">
-            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
-          </button>
+        <div class="process__card reveal">
+          <span class="process__bg-num">02</span>
+          <div class="process__icon process__icon--teal">
+            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8">
+              <rect x="3" y="3" width="18" height="18" rx="2"/>
+              <path d="M3 9h18M9 21V9"/>
+            </svg>
+          </div>
+          <h3 class="process__title">Planejar</h3>
+          <p class="process__desc">Estruturo a interface e as interações antes de escrever código. Decisões de design mudam tudo — e custar barato agora.</p>
         </div>
+
+        <div class="process__card reveal">
+          <span class="process__bg-num">03</span>
+          <div class="process__icon process__icon--purple">
+            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8">
+              <polyline points="16 18 22 12 16 6"/>
+              <polyline points="8 6 2 12 8 18"/>
+            </svg>
+          </div>
+          <h3 class="process__title">Construir</h3>
+          <p class="process__desc">Código limpo, responsivo e acessível. Cada detalhe é intencional — performance e legibilidade andam juntos.</p>
+        </div>
+
+        <div class="process__card reveal">
+          <span class="process__bg-num">04</span>
+          <div class="process__icon process__icon--green">
+            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8">
+              <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/>
+              <polyline points="22 4 12 14.01 9 11.01"/>
+            </svg>
+          </div>
+          <h3 class="process__title">Entregar</h3>
+          <p class="process__desc">Reviso, testo e entrego. Fico disponível para ajustes após o lançamento — o trabalho não termina no deploy.</p>
+        </div>
+
       </div>
     </div>
   </section>
@@ -366,10 +376,10 @@
   <div class="sn-overlay" id="snOverlay" aria-hidden="true">
     <div class="sn-bg" id="snBg"></div>
     <nav class="sn-panel" aria-label="Navegação principal">
-      <a href="#about"        class="sn-item" style="--i:0"><span class="sn-num">01</span><span class="sn-text">Sobre</span></a>
-      <a href="#projects"     class="sn-item" style="--i:1"><span class="sn-num">02</span><span class="sn-text">Projetos</span></a>
-      <a href="#testimonials" class="sn-item" style="--i:2"><span class="sn-num">03</span><span class="sn-text">Depoimentos</span></a>
-      <a href="#contact"      class="sn-item" style="--i:3"><span class="sn-num">04</span><span class="sn-text">Contato</span></a>
+      <a href="#about"    class="sn-item" style="--i:0"><span class="sn-num">01</span><span class="sn-text">Sobre</span></a>
+      <a href="#projects" class="sn-item" style="--i:1"><span class="sn-num">02</span><span class="sn-text">Projetos</span></a>
+      <a href="#process"  class="sn-item" style="--i:2"><span class="sn-num">03</span><span class="sn-text">Processo</span></a>
+      <a href="#contact"  class="sn-item" style="--i:3"><span class="sn-num">04</span><span class="sn-text">Contato</span></a>
     </nav>
   </div>
 

@@ -572,8 +572,9 @@
   const cards   = Array.from(container.querySelectorAll('.cs-card'));
   const total   = cards.length;
 
-  const cardDistance    = 44;
-  const verticalDistance = 52;
+  const mobile          = window.innerWidth <= 480;
+  const cardDistance    = mobile ? 20 : 44;
+  const verticalDistance = mobile ? 24 : 52;
   const delay           = 4000;
   const skewAmount      = 4;
 
@@ -606,9 +607,11 @@
   });
 
   const order = cards.map((_, i) => i);
+  let isAnimating = false;
 
   function swap() {
-    if (order.length < 2) return;
+    if (isAnimating || order.length < 2) return;
+    isAnimating = true;
 
     const [front, ...rest] = order;
     const elFront = cards[front];
@@ -636,13 +639,17 @@
       ease: cfg.ease,
     }, 'return');
 
-    tl.call(() => { order.splice(0, order.length, ...rest, front); });
+    tl.call(() => {
+      order.splice(0, order.length, ...rest, front);
+      isAnimating = false;
+    });
   }
 
   swap();
   let timer = setInterval(swap, delay);
 
   container.addEventListener('click', () => {
+    if (isAnimating) return;
     clearInterval(timer);
     swap();
     timer = setInterval(swap, delay);
