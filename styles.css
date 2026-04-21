@@ -155,29 +155,21 @@ ul { list-style: none; }
   text-decoration: none;
 }
 
-.nav__logo-mark {
-  width: 30px;
-  height: 36px;
-  flex-shrink: 0;
-  filter: drop-shadow(0 0 6px rgba(232,0,92,0.5)) drop-shadow(0 0 10px rgba(0,229,224,0.3));
-  transition: filter var(--trans-base);
-}
-
-.nav__logo:hover .nav__logo-mark {
-  filter: drop-shadow(0 0 10px rgba(232,0,92,0.8)) drop-shadow(0 0 16px rgba(0,229,224,0.5));
-}
-
-.nav__logo-name {
+.nav__logo-e {
   font-family: var(--font-heading);
-  font-size: 1.15rem;
-  font-weight: 700;
-  letter-spacing: 0.14em;
-  text-transform: lowercase;
-  color: var(--clr-text);
-  background: linear-gradient(90deg, #fff 60%, var(--clr-accent));
+  font-size: 1.7rem;
+  font-weight: 900;
+  line-height: 1;
+  background: var(--grad-primary);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   background-clip: text;
+  filter: drop-shadow(0 0 8px rgba(232,0,92,0.45));
+  transition: filter var(--transition-fast);
+}
+
+.nav__logo:hover .nav__logo-e {
+  filter: drop-shadow(0 0 14px rgba(232,0,92,0.75));
 }
 
 .nav__links {
@@ -295,26 +287,20 @@ ul { list-style: none; }
 .hero__content {
   position: relative;
   z-index: 2;
-  display: grid;
-  grid-template-columns: 1fr 1fr;
+  display: flex;
+  flex-direction: column;
   align-items: center;
-  gap: 64px;
+  text-align: center;
   padding: 140px 80px 100px;
   width: 100%;
-  max-width: 1200px;
+  max-width: 860px;
 }
 
 .hero__info {
   display: flex;
   flex-direction: column;
-  align-items: flex-start;
-  gap: 20px;
-}
-
-.hero__card-col {
-  display: flex;
-  justify-content: center;
   align-items: center;
+  gap: 20px;
 }
 
 /* ── Avatar circle ── */
@@ -347,7 +333,7 @@ ul { list-style: none; }
 /* ── Name + role ── */
 .hero__name {
   font-family: var(--font-heading);
-  font-size: clamp(2rem, 4vw, 3.2rem);
+  font-size: clamp(2.4rem, 5vw, 4rem);
   font-weight: 700;
   letter-spacing: 0.06em;
   line-height: 1.1;
@@ -355,21 +341,21 @@ ul { list-style: none; }
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   background-clip: text;
-  text-align: left;
+  text-align: center;
 }
 
 .hero__role {
-  font-size: clamp(1rem, 1.6vw, 1.15rem);
+  font-size: clamp(1rem, 1.8vw, 1.2rem);
   color: rgba(148,163,184,0.85);
   font-weight: 400;
   letter-spacing: 0.01em;
-  text-align: left;
+  text-align: center;
 }
 
 .hero__actions {
   display: flex;
   align-items: center;
-  justify-content: flex-start;
+  justify-content: center;
   gap: 12px;
 }
 
@@ -1753,7 +1739,7 @@ ul { list-style: none; }
    RESPONSIVE
 ══════════════════════════════════ */
 @media (max-width: 1024px) {
-  .hero__content { gap: 40px; padding: 130px 40px 90px; }
+  .hero__content { padding: 130px 40px 90px; }
 
   .about__grid { grid-template-columns: 1fr; gap: 48px; }
 
@@ -1791,15 +1777,8 @@ ul { list-style: none; }
   .nav__container { padding: 16px 20px; }
 
   .hero__content {
-    grid-template-columns: 1fr;
-    gap: 48px;
     padding: 120px 24px 80px;
-    text-align: center;
   }
-  .hero__info { align-items: center; }
-  .hero__name, .hero__role { text-align: center; }
-  .hero__actions { justify-content: center; }
-  .hero__card-col { order: -1; }
 
   .hero__title { font-size: clamp(2.2rem, 8vw, 3.5rem); }
 
