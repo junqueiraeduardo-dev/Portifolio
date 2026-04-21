@@ -1927,7 +1927,6 @@ ul { list-style: none; }
   .section-title { font-size: clamp(1.8rem, 6vw, 2.4rem); }
 
   /* prevent card stack from overflowing page on mobile */
-  .about { overflow: hidden; }
   .cs-stage { overflow: hidden; }
 }
 

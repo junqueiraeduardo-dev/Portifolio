@@ -148,6 +148,8 @@
   const prevBtn = document.getElementById('tPrev');
   const nextBtn = document.getElementById('tNext');
 
+  if (!track) return;
+
   const cards = Array.from(track.querySelectorAll('.tcard'));
   const total = cards.length;
   let current = 0;
