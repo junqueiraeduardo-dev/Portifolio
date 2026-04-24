@@ -689,15 +689,20 @@
   const OFFLINE_EFFICIENCY = 0.5;
 
   const upgrades = {
-    coffee:   { baseCost: 15,   baseRate: 0.5, growth: 1.15, name: 'Café' },
-    keyboard: { baseCost: 100,  baseRate: 3,   growth: 1.15, name: 'Teclado mecânico' },
-    cloud:    { baseCost: 1100, baseRate: 25,  growth: 1.15, name: 'Servidor na nuvem' },
+    coffee:   { baseCost: 15,      baseRate: 0.5,  growth: 1.15, name: 'Café' },
+    keyboard: { baseCost: 100,     baseRate: 3,    growth: 1.15, name: 'Teclado mecânico' },
+    cloud:    { baseCost: 1100,    baseRate: 25,   growth: 1.15, name: 'Servidor na nuvem' },
+    startup:  { baseCost: 12000,   baseRate: 120,  growth: 1.15, name: 'Startup' },
+    employee: { baseCost: 130000,  baseRate: 800,  growth: 1.15, name: 'Funcionários' },
+    contract: { baseCost: 1500000, baseRate: 6000, growth: 1.15, name: 'Contrato corporativo' },
   };
+
+  const UPGRADE_KEYS = Object.keys(upgrades);
 
   const state = {
     loc: 0,
     totalClicks: 0,
-    counts: { coffee: 0, keyboard: 0, cloud: 0 },
+    counts: Object.fromEntries(UPGRADE_KEYS.map(k => [k, 0])),
     lastSave: Date.now(),
   };
 
@@ -707,16 +712,8 @@
     clicks: document.getElementById('totalClicks'),
     reset: document.getElementById('resetBtn'),
     upgrades: document.querySelectorAll('[data-buy]'),
-    costs: {
-      coffee: document.querySelector('[data-cost="coffee"]'),
-      keyboard: document.querySelector('[data-cost="keyboard"]'),
-      cloud: document.querySelector('[data-cost="cloud"]'),
-    },
-    counts: {
-      coffee: document.querySelector('[data-count="coffee"]'),
-      keyboard: document.querySelector('[data-count="keyboard"]'),
-      cloud: document.querySelector('[data-count="cloud"]'),
-    },
+    costs:  Object.fromEntries(UPGRADE_KEYS.map(k => [k, document.querySelector(`[data-cost="${k}"]`)])),
+    counts: Object.fromEntries(UPGRADE_KEYS.map(k => [k, document.querySelector(`[data-count="${k}"]`)])),
   };
 
   function formatNum(n, decimals) {
@@ -751,9 +748,7 @@
 
     state.loc = Number(data.loc) || 0;
     state.totalClicks = Number(data.totalClicks) || 0;
-    state.counts.coffee = Number(data.counts?.coffee) || 0;
-    state.counts.keyboard = Number(data.counts?.keyboard) || 0;
-    state.counts.cloud = Number(data.counts?.cloud) || 0;
+    UPGRADE_KEYS.forEach(k => { state.counts[k] = Number(data.counts?.[k]) || 0; });
     state.lastSave = Number(data.lastSave) || Date.now();
 
     const elapsedSec = Math.max(0, Math.min(OFFLINE_CAP_SEC, (Date.now() - state.lastSave) / 1000));
