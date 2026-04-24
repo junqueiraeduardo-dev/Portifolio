@@ -677,7 +677,207 @@
   });
 })();
 
-/* ══ 14. BACK TO TOP ══ */
+/* ══ 14. CLICKER GAME — Simulador de Programador ══ */
+(function initClickerGame() {
+  const clickBtn = document.getElementById('clickBtn');
+  if (!clickBtn) return;
+
+  const STORAGE_KEY = 'nexus.clicker.v1';
+  const SAVE_INTERVAL_MS = 5000;
+  const TICK_HZ = 10;
+  const OFFLINE_CAP_SEC = 4 * 60 * 60;
+  const OFFLINE_EFFICIENCY = 0.5;
+
+  const upgrades = {
+    coffee:   { baseCost: 15,   baseRate: 0.5, growth: 1.15, name: 'Café' },
+    keyboard: { baseCost: 100,  baseRate: 3,   growth: 1.15, name: 'Teclado mecânico' },
+    cloud:    { baseCost: 1100, baseRate: 25,  growth: 1.15, name: 'Servidor na nuvem' },
+  };
+
+  const state = {
+    loc: 0,
+    totalClicks: 0,
+    counts: { coffee: 0, keyboard: 0, cloud: 0 },
+    lastSave: Date.now(),
+  };
+
+  const els = {
+    loc: document.getElementById('locCount'),
+    lps: document.getElementById('lpsCount'),
+    clicks: document.getElementById('totalClicks'),
+    reset: document.getElementById('resetBtn'),
+    upgrades: document.querySelectorAll('[data-buy]'),
+    costs: {
+      coffee: document.querySelector('[data-cost="coffee"]'),
+      keyboard: document.querySelector('[data-cost="keyboard"]'),
+      cloud: document.querySelector('[data-cost="cloud"]'),
+    },
+    counts: {
+      coffee: document.querySelector('[data-count="coffee"]'),
+      keyboard: document.querySelector('[data-count="keyboard"]'),
+      cloud: document.querySelector('[data-count="cloud"]'),
+    },
+  };
+
+  function formatNum(n, decimals) {
+    if (n < 1000) {
+      if (decimals && n > 0 && n < 100) return n.toFixed(1).replace(/\.0$/, '');
+      return Math.floor(n).toString();
+    }
+    if (n < 1e6)  return (n / 1e3).toFixed(n < 1e4 ? 2 : 1).replace(/\.?0+$/, '') + 'K';
+    if (n < 1e9)  return (n / 1e6).toFixed(n < 1e7 ? 2 : 1).replace(/\.?0+$/, '') + 'M';
+    if (n < 1e12) return (n / 1e9).toFixed(2).replace(/\.?0+$/, '') + 'B';
+    return (n / 1e12).toFixed(2).replace(/\.?0+$/, '') + 'T';
+  }
+
+  function costOf(key) {
+    const cfg = upgrades[key];
+    return Math.ceil(cfg.baseCost * Math.pow(cfg.growth, state.counts[key]));
+  }
+
+  function lps() {
+    let total = 0;
+    for (const key in upgrades) total += upgrades[key].baseRate * state.counts[key];
+    return total;
+  }
+
+  function load() {
+    let raw;
+    try { raw = localStorage.getItem(STORAGE_KEY); } catch (e) { return; }
+    if (!raw) return;
+    let data;
+    try { data = JSON.parse(raw); } catch (e) { return; }
+    if (!data || typeof data !== 'object') return;
+
+    state.loc = Number(data.loc) || 0;
+    state.totalClicks = Number(data.totalClicks) || 0;
+    state.counts.coffee = Number(data.counts?.coffee) || 0;
+    state.counts.keyboard = Number(data.counts?.keyboard) || 0;
+    state.counts.cloud = Number(data.counts?.cloud) || 0;
+    state.lastSave = Number(data.lastSave) || Date.now();
+
+    const elapsedSec = Math.max(0, Math.min(OFFLINE_CAP_SEC, (Date.now() - state.lastSave) / 1000));
+    const offlineGain = lps() * elapsedSec * OFFLINE_EFFICIENCY;
+    if (offlineGain >= 1 && elapsedSec >= 30) {
+      state.loc += offlineGain;
+      const mins = Math.floor(elapsedSec / 60);
+      const timeStr = mins >= 60 ? `${Math.floor(mins / 60)}h ${mins % 60}min` : `${mins} min`;
+      showToast(`Bem-vindo de volta! Seus bots escreveram <strong>${formatNum(offlineGain)}</strong> linhas em ${timeStr}.`);
+    }
+  }
+
+  function save() {
+    state.lastSave = Date.now();
+    try {
+      localStorage.setItem(STORAGE_KEY, JSON.stringify({
+        loc: state.loc,
+        totalClicks: state.totalClicks,
+        counts: state.counts,
+        lastSave: state.lastSave,
+      }));
+    } catch (e) { /* quota / disabled — silent */ }
+  }
+
+  function showToast(html) {
+    let toast = document.querySelector('.game__toast');
+    if (!toast) {
+      toast = document.createElement('div');
+      toast.className = 'game__toast';
+      toast.setAttribute('role', 'status');
+      document.body.appendChild(toast);
+    }
+    toast.innerHTML = html;
+    requestAnimationFrame(() => toast.classList.add('show'));
+    clearTimeout(toast._t);
+    toast._t = setTimeout(() => toast.classList.remove('show'), 6000);
+  }
+
+  function spawnFloat(text) {
+    const rect = clickBtn.getBoundingClientRect();
+    const f = document.createElement('span');
+    f.className = 'game__float';
+    f.textContent = text;
+    f.style.position = 'fixed';
+    f.style.left = (rect.left + rect.width / 2 + (Math.random() * 40 - 20)) + 'px';
+    f.style.top = (rect.top + rect.height / 3) + 'px';
+    f.style.pointerEvents = 'none';
+    f.style.zIndex = 9998;
+    document.body.appendChild(f);
+    setTimeout(() => f.remove(), 1100);
+  }
+
+  function buy(key) {
+    const cost = costOf(key);
+    if (state.loc < cost) return;
+    state.loc -= cost;
+    state.counts[key] += 1;
+    render();
+    save();
+  }
+
+  function click() {
+    state.loc += 1;
+    state.totalClicks += 1;
+    spawnFloat('+1');
+    if (els.loc) {
+      els.loc.classList.remove('bump');
+      void els.loc.offsetWidth;
+      els.loc.classList.add('bump');
+    }
+    clickBtn.classList.add('pressed');
+    setTimeout(() => clickBtn.classList.remove('pressed'), 120);
+    render();
+  }
+
+  function render() {
+    if (els.loc) els.loc.textContent = formatNum(state.loc);
+    if (els.lps) els.lps.textContent = formatNum(lps(), true);
+    if (els.clicks) els.clicks.textContent = formatNum(state.totalClicks);
+    els.upgrades.forEach((btn) => {
+      const key = btn.dataset.buy;
+      const cost = costOf(key);
+      const can = state.loc >= cost;
+      btn.disabled = !can;
+      btn.classList.toggle('affordable', can);
+      if (els.costs[key]) els.costs[key].textContent = formatNum(cost);
+      if (els.counts[key]) els.counts[key].textContent = state.counts[key];
+    });
+  }
+
+  function tick() {
+    const gain = lps() / TICK_HZ;
+    if (gain > 0) {
+      state.loc += gain;
+      render();
+    }
+  }
+
+  clickBtn.addEventListener('click', click);
+
+  els.upgrades.forEach((btn) => {
+    btn.addEventListener('click', () => buy(btn.dataset.buy));
+  });
+
+  if (els.reset) {
+    els.reset.addEventListener('click', () => {
+      if (!confirm('Resetar todo o progresso? Isso não pode ser desfeito.')) return;
+      state.loc = 0;
+      state.totalClicks = 0;
+      state.counts = { coffee: 0, keyboard: 0, cloud: 0 };
+      try { localStorage.removeItem(STORAGE_KEY); } catch (e) {}
+      render();
+    });
+  }
+
+  load();
+  render();
+  setInterval(tick, 1000 / TICK_HZ);
+  setInterval(save, SAVE_INTERVAL_MS);
+  window.addEventListener('beforeunload', save);
+  document.addEventListener('visibilitychange', () => { if (document.hidden) save(); });
+})();
+
+/* ══ 15. BACK TO TOP ══ */
 (function initBackToTop() {
   const btn = document.getElementById('bttBtn');
   if (!btn) return;

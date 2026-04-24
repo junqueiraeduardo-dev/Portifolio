@@ -45,6 +45,7 @@
         <li><a href="#about" class="nav__link">Sobre</a></li>
         <li><a href="#projects" class="nav__link">Projetos</a></li>
         <li><a href="#process" class="nav__link">Processo</a></li>
+        <li><a href="#game" class="nav__link">Bônus</a></li>
         <li><a href="#contact" class="nav__cta">Fale Comigo</a></li>
       </ul>
       <button class="nav__burger" id="burger" aria-label="Menu">
@@ -59,6 +60,7 @@
       <li><a href="#about"    class="nav__link mobile-link">Sobre</a></li>
       <li><a href="#projects" class="nav__link mobile-link">Projetos</a></li>
       <li><a href="#process"  class="nav__link mobile-link">Processo</a></li>
+      <li><a href="#game"     class="nav__link mobile-link">Bônus</a></li>
       <li><a href="#contact"  class="nav__link mobile-link">Contato</a></li>
     </ul>
   </div>
@@ -291,6 +293,90 @@
           </div>
           <h3 class="process__title">Entregar</h3>
           <p class="process__desc">Reviso, testo e entrego. Fico disponível para ajustes após o lançamento — o trabalho não termina no deploy.</p>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- ══════════════════════════ BÔNUS — CLICKER GAME ══════════════════════════ -->
+  <section class="game" id="game">
+    <div class="container">
+      <div class="section-header reveal">
+        <p class="section-label">Bônus</p>
+        <h2 class="section-title scroll-float">Simulador de <span class="gradient-text">Programador</span></h2>
+        <p class="section-desc">Clique para escrever código. Compre upgrades. Volte amanhã — seu progresso é salvo automaticamente.</p>
+      </div>
+
+      <div class="game__layout reveal">
+
+        <!-- ── Painel principal: clicker ── -->
+        <div class="game__main">
+          <div class="game__display">
+            <div class="game__counter">
+              <span class="game__loc" id="locCount">0</span>
+              <span class="game__loc-label">linhas de código</span>
+            </div>
+            <div class="game__lps">
+              <span class="game__lps-icon"></span>
+              <span id="lpsCount">0</span> LoC/s
+            </div>
+          </div>
+
+          <button class="game__btn" id="clickBtn" type="button" aria-label="Escrever uma linha de código">
+            <span class="game__btn-mono">{ <span class="game__btn-cursor">_</span> }</span>
+            <span class="game__btn-label">Escrever código</span>
+          </button>
+
+          <div class="game__meta">
+            <span>Cliques: <strong id="totalClicks">0</strong></span>
+            <span class="game__meta-dot"></span>
+            <button class="game__reset" id="resetBtn" type="button">Resetar progresso</button>
+          </div>
+        </div>
+
+        <!-- ── Lista de upgrades ── -->
+        <div class="game__upgrades">
+
+          <button class="game__upgrade" type="button" data-buy="coffee" disabled>
+            <div class="game__upgrade-icon">☕</div>
+            <div class="game__upgrade-info">
+              <h3 class="game__upgrade-name">Café</h3>
+              <p class="game__upgrade-desc">Cafeína no sangue, código no editor</p>
+              <span class="game__upgrade-rate">+0.5 LoC/s cada</span>
+            </div>
+            <div class="game__upgrade-side">
+              <span class="game__upgrade-cost" data-cost="coffee">15</span>
+              <span class="game__upgrade-count">x<span data-count="coffee">0</span></span>
+            </div>
+          </button>
+
+          <button class="game__upgrade" type="button" data-buy="keyboard" disabled>
+            <div class="game__upgrade-icon">⌨️</div>
+            <div class="game__upgrade-info">
+              <h3 class="game__upgrade-name">Teclado mecânico</h3>
+              <p class="game__upgrade-desc">Click clack click clack</p>
+              <span class="game__upgrade-rate">+3 LoC/s cada</span>
+            </div>
+            <div class="game__upgrade-side">
+              <span class="game__upgrade-cost" data-cost="keyboard">100</span>
+              <span class="game__upgrade-count">x<span data-count="keyboard">0</span></span>
+            </div>
+          </button>
+
+          <button class="game__upgrade" type="button" data-buy="cloud" disabled>
+            <div class="game__upgrade-icon">☁️</div>
+            <div class="game__upgrade-info">
+              <h3 class="game__upgrade-name">Servidor na nuvem</h3>
+              <p class="game__upgrade-desc">CI/CD trabalhando por você 24/7</p>
+              <span class="game__upgrade-rate">+25 LoC/s cada</span>
+            </div>
+            <div class="game__upgrade-side">
+              <span class="game__upgrade-cost" data-cost="cloud">1.1K</span>
+              <span class="game__upgrade-count">x<span data-count="cloud">0</span></span>
+            </div>
+          </button>
+
         </div>
 
       </div>
