@@ -28,10 +28,18 @@
   <!-- ═══════════════════════════ NAV ═══════════════════════════ -->
   <nav class="nav" id="nav">
     <div class="nav__container">
-      <a href="#" class="nav__logo">
-        <div class="nav__logo-mark">
-          <span class="nav__logo-e">E</span>
-        </div>
+      <a href="#" class="nav__logo" aria-label="Eduardo Junqueira">
+        <svg class="nav__logo-svg" width="30" height="27" viewBox="0 0 72 64" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+          <defs>
+            <linearGradient id="nlg" x1="0" y1="0" x2="72" y2="64" gradientUnits="userSpaceOnUse">
+              <stop stop-color="#e8005c"/><stop offset="1" stop-color="#00e5e0"/>
+            </linearGradient>
+          </defs>
+          <rect x="0" y="0"  width="9"  height="64" rx="3" fill="url(#nlg)" opacity="0.65"/>
+          <rect x="0" y="0"  width="72" height="14" rx="3" fill="url(#nlg)"/>
+          <rect x="0" y="25" width="50" height="14" rx="3" fill="url(#nlg)" opacity="0.8"/>
+          <rect x="0" y="50" width="72" height="14" rx="3" fill="url(#nlg)"/>
+        </svg>
       </a>
       <ul class="nav__links">
         <li><a href="#about" class="nav__link">Sobre</a></li>
@@ -376,10 +384,18 @@
   <footer class="footer">
     <div class="container">
       <div class="footer__top">
-        <a href="#" class="nav__logo footer__logo">
-          <div class="nav__logo-mark">
-            <span class="nav__logo-e">E</span>
-          </div>
+        <a href="#" class="nav__logo footer__logo" aria-label="Eduardo Junqueira">
+          <svg class="nav__logo-svg" width="34" height="30" viewBox="0 0 72 64" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+            <defs>
+              <linearGradient id="flg" x1="0" y1="0" x2="72" y2="64" gradientUnits="userSpaceOnUse">
+                <stop stop-color="#e8005c"/><stop offset="1" stop-color="#00e5e0"/>
+              </linearGradient>
+            </defs>
+            <rect x="0" y="0"  width="9"  height="64" rx="3" fill="url(#flg)" opacity="0.65"/>
+            <rect x="0" y="0"  width="72" height="14" rx="3" fill="url(#flg)"/>
+            <rect x="0" y="25" width="50" height="14" rx="3" fill="url(#flg)" opacity="0.8"/>
+            <rect x="0" y="50" width="72" height="14" rx="3" fill="url(#flg)"/>
+          </svg>
         </a>
         <p class="footer__tagline">Desenvolvedor Front-end</p>
       </div>
