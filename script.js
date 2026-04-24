@@ -5,6 +5,25 @@
 'use strict';
 
 
+/* ══ 0. INTRO ══ */
+(function initIntro() {
+  const intro = document.getElementById('intro');
+  if (!intro) return;
+  document.body.style.overflow = 'hidden';
+
+  function dismiss() {
+    intro.classList.add('exit');
+    intro.addEventListener('transitionend', () => {
+      intro.remove();
+      document.body.style.overflow = '';
+    }, { once: true });
+  }
+
+  // Bar fill: 1.2s delay + 1.2s duration = 2.4s, add short buffer
+  setTimeout(dismiss, 2700);
+  intro.addEventListener('click', dismiss, { once: true });
+})();
+
 
 /* ══ 1. NAVIGATION ══ */
 (function initNav() {
