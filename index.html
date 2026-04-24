@@ -292,7 +292,7 @@
             </svg>
           </div>
           <h3 class="process__title">Entregar</h3>
-          <p class="process__desc">Reviso, testo e entrego. Fico disponível para ajustes após o lançamento — o trabalho não termina no deploy.</p>
+          <p class="process__desc">Reviso, testo e entrego. Fico disponível para ajustes após o lançamento.</p>
         </div>
 
       </div>
@@ -305,7 +305,7 @@
       <div class="section-header reveal">
         <p class="section-label">Bônus</p>
         <h2 class="section-title scroll-float">Simulador de <span class="gradient-text">Programador</span></h2>
-        <p class="section-desc">Clique para escrever código. Compre upgrades. Volte amanhã — seu progresso é salvo automaticamente.</p>
+        <p class="section-desc">Clique para escrever código. Compre upgrades. Salve o progresso e volte amanhã para continuar.</p>
       </div>
 
       <div class="game__layout reveal">
@@ -331,7 +331,12 @@
           <div class="game__meta">
             <span>Cliques: <strong id="totalClicks">0</strong></span>
             <span class="game__meta-dot"></span>
-            <button class="game__reset" id="resetBtn" type="button">Resetar progresso</button>
+            <button class="game__save" id="saveBtn" type="button" aria-label="Salvar progresso">
+              <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" aria-hidden="true"><path d="M19 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11l5 5v11a2 2 0 0 1-2 2z"/><polyline points="17 21 17 13 7 13 7 21"/><polyline points="7 3 7 8 15 8"/></svg>
+              Salvar
+            </button>
+            <span class="game__meta-dot"></span>
+            <button class="game__reset" id="resetBtn" type="button">Resetar</button>
           </div>
         </div>
 

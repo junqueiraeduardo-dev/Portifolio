@@ -683,7 +683,7 @@
   if (!clickBtn) return;
 
   const STORAGE_KEY = 'nexus.clicker.v1';
-  const SAVE_INTERVAL_MS = 5000;
+  // auto-save removed — user saves manually via button
   const TICK_HZ = 10;
   const OFFLINE_CAP_SEC = 4 * 60 * 60;
   const OFFLINE_EFFICIENCY = 0.5;
@@ -711,6 +711,7 @@
     lps: document.getElementById('lpsCount'),
     clicks: document.getElementById('totalClicks'),
     reset: document.getElementById('resetBtn'),
+    save: document.getElementById('saveBtn'),
     upgrades: document.querySelectorAll('[data-buy]'),
     costs:  Object.fromEntries(UPGRADE_KEYS.map(k => [k, document.querySelector(`[data-cost="${k}"]`)])),
     counts: Object.fromEntries(UPGRADE_KEYS.map(k => [k, document.querySelector(`[data-count="${k}"]`)])),
@@ -807,7 +808,6 @@
     state.loc -= cost;
     state.counts[key] += 1;
     render();
-    save();
   }
 
   function click() {
@@ -864,12 +864,23 @@
     });
   }
 
+  if (els.save) {
+    els.save.addEventListener('click', () => {
+      save();
+      els.save.classList.add('saved');
+      const orig = els.save.innerHTML;
+      els.save.innerHTML = '<svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" aria-hidden="true"><polyline points="20 6 9 17 4 12"/></svg> Salvo!';
+      clearTimeout(els.save._t);
+      els.save._t = setTimeout(() => {
+        els.save.classList.remove('saved');
+        els.save.innerHTML = orig;
+      }, 1800);
+    });
+  }
+
   load();
   render();
   setInterval(tick, 1000 / TICK_HZ);
-  setInterval(save, SAVE_INTERVAL_MS);
-  window.addEventListener('beforeunload', save);
-  document.addEventListener('visibilitychange', () => { if (document.hidden) save(); });
 })();
 
 /* ══ 15. BACK TO TOP ══ */

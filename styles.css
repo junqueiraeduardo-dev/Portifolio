@@ -1517,6 +1517,30 @@ ul { list-style: none; }
   background: var(--clr-text-muted);
 }
 
+.game__save {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  background: rgba(0,229,224,0.08);
+  border: 1px solid rgba(0,229,224,0.25);
+  border-radius: 6px;
+  font: inherit;
+  font-size: 0.78rem;
+  color: var(--clr-secondary);
+  cursor: pointer;
+  padding: 4px 10px;
+  transition: background var(--transition-fast), border-color var(--transition-fast), color var(--transition-fast);
+}
+.game__save:hover {
+  background: rgba(0,229,224,0.16);
+  border-color: rgba(0,229,224,0.5);
+}
+.game__save.saved {
+  background: rgba(0,229,224,0.18);
+  border-color: var(--clr-secondary);
+  color: var(--clr-secondary);
+}
+
 .game__reset {
   background: none;
   border: none;
