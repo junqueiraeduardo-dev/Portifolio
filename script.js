@@ -657,210 +657,150 @@
   });
 })();
 
-/* ══ 14. CLICKER GAME — Simulador de Programador ══ */
-(function initClickerGame() {
-  const clickBtn = document.getElementById('clickBtn');
-  if (!clickBtn) return;
+/* ══ 14. HANGMAN — Jogo da Forca ══ */
+(function initHangman() {
+  const wordEl     = document.getElementById('wordDisplay');
+  if (!wordEl) return;
 
-  const STORAGE_KEY = 'nexus.clicker.v1';
-  // auto-save removed — user saves manually via button
-  const TICK_HZ = 10;
-  const OFFLINE_CAP_SEC = 4 * 60 * 60;
-  const OFFLINE_EFFICIENCY = 0.5;
+  const hangmanEl  = document.getElementById('hangmanWrap');
+  const livesEl    = document.getElementById('livesLeft');
+  const winsEl     = document.getElementById('winsCount');
+  const feedbackEl = document.getElementById('gameFeedback');
+  const keyboardEl = document.getElementById('keyboard');
+  const newWordBtn = document.getElementById('newWordBtn');
 
-  const upgrades = {
-    coffee:   { baseCost: 15,      baseRate: 0.5,  growth: 1.15, name: 'Café' },
-    keyboard: { baseCost: 100,     baseRate: 3,    growth: 1.15, name: 'Teclado mecânico' },
-    cloud:    { baseCost: 1100,    baseRate: 25,   growth: 1.15, name: 'Servidor na nuvem' },
-    startup:  { baseCost: 12000,   baseRate: 120,  growth: 1.15, name: 'Startup' },
-    employee: { baseCost: 130000,  baseRate: 800,  growth: 1.15, name: 'Funcionários' },
-    contract: { baseCost: 1500000, baseRate: 6000, growth: 1.15, name: 'Contrato corporativo' },
-  };
+  const STORAGE_KEY = 'eduardo.hangman.v1';
+  const MAX_WRONG   = 6;
 
-  const UPGRADE_KEYS = Object.keys(upgrades);
+  const WORDS = [
+    'JAVASCRIPT', 'HTML', 'CSS', 'FUNCAO', 'VARIAVEL', 'CONSTANTE', 'ARRAY',
+    'OBJETO', 'METODO', 'CLASSE', 'COMPONENTE', 'INTERFACE', 'ALGORITMO',
+    'BACKEND', 'FRONTEND', 'SERVIDOR', 'NUVEM', 'REPOSITORIO', 'COMMIT',
+    'DEPLOY', 'FRAMEWORK', 'BIBLIOTECA', 'COMPILADOR', 'PROTOCOLO',
+    'ENDPOINT', 'RESPONSIVO', 'BROWSER', 'TERMINAL', 'TECLADO', 'CODIGO',
+    'PROGRAMA', 'MONITOR', 'DESENVOLVEDOR', 'PORTFOLIO', 'DESIGN',
+    'INTERATIVO', 'PROJETO', 'CARREIRA', 'INATEL', 'PROMISE', 'FETCH',
+    'CALLBACK', 'TYPESCRIPT', 'CONSOLE', 'EVENTO', 'PARAMETRO',
+    'ARGUMENTO', 'BOOLEANO', 'STRING', 'NUMERO', 'INTEGER', 'OBJETO',
+    'PROTOTYPE', 'MODULO', 'IMPORT', 'EXPORT', 'ASYNC', 'AWAIT', 'BUFFER',
+  ];
+
+  const ALPHABET = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ';
 
   const state = {
-    loc: 0,
-    totalClicks: 0,
-    counts: Object.fromEntries(UPGRADE_KEYS.map(k => [k, 0])),
-    lastSave: Date.now(),
+    word: '',
+    guessed: new Set(),
+    wrong: 0,
+    wins: 0,
+    locked: false,
   };
 
-  const els = {
-    loc: document.getElementById('locCount'),
-    lps: document.getElementById('lpsCount'),
-    clicks: document.getElementById('totalClicks'),
-    reset: document.getElementById('resetBtn'),
-    save: document.getElementById('saveBtn'),
-    upgrades: document.querySelectorAll('[data-buy]'),
-    costs:  Object.fromEntries(UPGRADE_KEYS.map(k => [k, document.querySelector(`[data-cost="${k}"]`)])),
-    counts: Object.fromEntries(UPGRADE_KEYS.map(k => [k, document.querySelector(`[data-count="${k}"]`)])),
-  };
-
-  function formatNum(n, decimals) {
-    if (n < 1000) {
-      if (decimals && n > 0 && n < 100) return n.toFixed(1).replace(/\.0$/, '');
-      return Math.floor(n).toString();
-    }
-    if (n < 1e6)  return (n / 1e3).toFixed(n < 1e4 ? 2 : 1).replace(/\.?0+$/, '') + 'K';
-    if (n < 1e9)  return (n / 1e6).toFixed(n < 1e7 ? 2 : 1).replace(/\.?0+$/, '') + 'M';
-    if (n < 1e12) return (n / 1e9).toFixed(2).replace(/\.?0+$/, '') + 'B';
-    return (n / 1e12).toFixed(2).replace(/\.?0+$/, '') + 'T';
-  }
-
-  function costOf(key) {
-    const cfg = upgrades[key];
-    return Math.ceil(cfg.baseCost * Math.pow(cfg.growth, state.counts[key]));
-  }
-
-  function lps() {
-    let total = 0;
-    for (const key in upgrades) total += upgrades[key].baseRate * state.counts[key];
-    return total;
-  }
-
-  function load() {
-    let raw;
-    try { raw = localStorage.getItem(STORAGE_KEY); } catch (e) { return; }
-    if (!raw) return;
-    let data;
-    try { data = JSON.parse(raw); } catch (e) { return; }
-    if (!data || typeof data !== 'object') return;
-
-    state.loc = Number(data.loc) || 0;
-    state.totalClicks = Number(data.totalClicks) || 0;
-    UPGRADE_KEYS.forEach(k => { state.counts[k] = Number(data.counts?.[k]) || 0; });
-    state.lastSave = Number(data.lastSave) || Date.now();
-
-    const elapsedSec = Math.max(0, Math.min(OFFLINE_CAP_SEC, (Date.now() - state.lastSave) / 1000));
-    const offlineGain = lps() * elapsedSec * OFFLINE_EFFICIENCY;
-    if (offlineGain >= 1 && elapsedSec >= 30) {
-      state.loc += offlineGain;
-      const mins = Math.floor(elapsedSec / 60);
-      const timeStr = mins >= 60 ? `${Math.floor(mins / 60)}h ${mins % 60}min` : `${mins} min`;
-      showToast(`Bem-vindo de volta! Seus bots escreveram <strong>${formatNum(offlineGain)}</strong> linhas em ${timeStr}.`);
-    }
-  }
-
-  function save() {
-    state.lastSave = Date.now();
+  function loadStats() {
     try {
-      localStorage.setItem(STORAGE_KEY, JSON.stringify({
-        loc: state.loc,
-        totalClicks: state.totalClicks,
-        counts: state.counts,
-        lastSave: state.lastSave,
-      }));
-    } catch (e) { /* quota / disabled — silent */ }
+      const raw = localStorage.getItem(STORAGE_KEY);
+      if (!raw) return;
+      const data = JSON.parse(raw);
+      state.wins = Number(data.wins) || 0;
+    } catch (e) {}
   }
 
-  function showToast(html) {
-    let toast = document.querySelector('.game__toast');
-    if (!toast) {
-      toast = document.createElement('div');
-      toast.className = 'game__toast';
-      toast.setAttribute('role', 'status');
-      document.body.appendChild(toast);
-    }
-    toast.innerHTML = html;
-    requestAnimationFrame(() => toast.classList.add('show'));
-    clearTimeout(toast._t);
-    toast._t = setTimeout(() => toast.classList.remove('show'), 6000);
+  function saveStats() {
+    try {
+      localStorage.setItem(STORAGE_KEY, JSON.stringify({ wins: state.wins }));
+    } catch (e) {}
   }
 
-  function spawnFloat(text) {
-    const rect = clickBtn.getBoundingClientRect();
-    const f = document.createElement('span');
-    f.className = 'game__float';
-    f.textContent = text;
-    f.style.position = 'fixed';
-    f.style.left = (rect.left + rect.width / 2 + (Math.random() * 40 - 20)) + 'px';
-    f.style.top = (rect.top + rect.height / 3) + 'px';
-    f.style.pointerEvents = 'none';
-    f.style.zIndex = 9998;
-    document.body.appendChild(f);
-    setTimeout(() => f.remove(), 1100);
+  function pickWord() {
+    let w;
+    do { w = WORDS[Math.floor(Math.random() * WORDS.length)]; }
+    while (w === state.word && WORDS.length > 1);
+    return w;
   }
 
-  function buy(key) {
-    const cost = costOf(key);
-    if (state.loc < cost) return;
-    state.loc -= cost;
-    state.counts[key] += 1;
+  function buildKeyboard() {
+    keyboardEl.innerHTML = '';
+    ALPHABET.split('').forEach((letter) => {
+      const btn = document.createElement('button');
+      btn.type = 'button';
+      btn.className = 'hangman__key';
+      btn.textContent = letter;
+      btn.dataset.letter = letter;
+      btn.setAttribute('aria-label', `Letra ${letter}`);
+      btn.addEventListener('click', () => guess(letter));
+      keyboardEl.appendChild(btn);
+    });
+  }
+
+  function newRound() {
+    state.word = pickWord();
+    state.guessed = new Set();
+    state.wrong = 0;
+    state.locked = false;
+    feedbackEl.textContent = '';
+    feedbackEl.className = 'hangman__feedback';
+    hangmanEl.classList.remove('lost');
+    buildKeyboard();
     render();
   }
 
-  function click() {
-    state.loc += 1;
-    state.totalClicks += 1;
-    spawnFloat('+1');
-    if (els.loc) {
-      els.loc.classList.remove('bump');
-      void els.loc.offsetWidth;
-      els.loc.classList.add('bump');
+  function guess(letter) {
+    if (state.locked) return;
+    if (state.guessed.has(letter)) return;
+    state.guessed.add(letter);
+
+    const btn = keyboardEl.querySelector(`[data-letter="${letter}"]`);
+    if (state.word.includes(letter)) {
+      if (btn) btn.classList.add('right');
+    } else {
+      state.wrong += 1;
+      if (btn) btn.classList.add('wrong');
     }
-    clickBtn.classList.add('pressed');
-    setTimeout(() => clickBtn.classList.remove('pressed'), 120);
+    if (btn) btn.disabled = true;
+
+    const won = state.word.split('').every(l => state.guessed.has(l));
+    const lost = state.wrong >= MAX_WRONG;
+
+    if (won) {
+      state.locked = true;
+      state.wins += 1;
+      saveStats();
+      feedbackEl.textContent = 'Acertou! Próxima palavra em 2s...';
+      feedbackEl.className = 'hangman__feedback win';
+      setTimeout(newRound, 2000);
+    } else if (lost) {
+      state.locked = true;
+      hangmanEl.classList.add('lost');
+      feedbackEl.textContent = `Game over! A palavra era: ${state.word}`;
+      feedbackEl.className = 'hangman__feedback lose';
+      keyboardEl.querySelectorAll('.hangman__key').forEach(b => b.disabled = true);
+    }
     render();
   }
 
   function render() {
-    if (els.loc) els.loc.textContent = formatNum(state.loc);
-    if (els.lps) els.lps.textContent = formatNum(lps(), true);
-    if (els.clicks) els.clicks.textContent = formatNum(state.totalClicks);
-    els.upgrades.forEach((btn) => {
-      const key = btn.dataset.buy;
-      const cost = costOf(key);
-      const can = state.loc >= cost;
-      btn.disabled = !can;
-      btn.classList.toggle('affordable', can);
-      if (els.costs[key]) els.costs[key].textContent = formatNum(cost);
-      if (els.counts[key]) els.counts[key].textContent = state.counts[key];
-    });
+    wordEl.innerHTML = state.word.split('').map(l => {
+      const revealed = state.guessed.has(l);
+      const missed = state.locked && state.wrong >= MAX_WRONG && !state.guessed.has(l);
+      const cls = 'hangman__letter' + (missed ? ' hangman__letter--missed' : '');
+      return `<span class="${cls}">${revealed || missed ? l : ''}</span>`;
+    }).join('');
+
+    hangmanEl.dataset.wrong = String(state.wrong);
+    livesEl.textContent = MAX_WRONG - state.wrong;
+    winsEl.textContent = state.wins;
   }
 
-  function tick() {
-    const gain = lps() / TICK_HZ;
-    if (gain > 0) {
-      state.loc += gain;
-      render();
-    }
-  }
-
-  clickBtn.addEventListener('click', click);
-
-  els.upgrades.forEach((btn) => {
-    btn.addEventListener('click', () => buy(btn.dataset.buy));
+  document.addEventListener('keydown', (e) => {
+    if (e.metaKey || e.ctrlKey || e.altKey) return;
+    if (state.locked && e.key === 'Enter') { newRound(); return; }
+    const letter = (e.key || '').toUpperCase();
+    if (/^[A-Z]$/.test(letter)) guess(letter);
   });
 
-  if (els.reset) {
-    els.reset.addEventListener('click', () => {
-      if (!confirm('Resetar todo o progresso? Isso não pode ser desfeito.')) return;
-      state.loc = 0;
-      state.totalClicks = 0;
-      state.counts = { coffee: 0, keyboard: 0, cloud: 0 };
-      try { localStorage.removeItem(STORAGE_KEY); } catch (e) {}
-      render();
-    });
-  }
+  if (newWordBtn) newWordBtn.addEventListener('click', newRound);
 
-  if (els.save) {
-    els.save.addEventListener('click', () => {
-      save();
-      els.save.classList.add('saved');
-      const orig = els.save.innerHTML;
-      els.save.innerHTML = '<svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" aria-hidden="true"><polyline points="20 6 9 17 4 12"/></svg> Salvo!';
-      clearTimeout(els.save._t);
-      els.save._t = setTimeout(() => {
-        els.save.classList.remove('saved');
-        els.save.innerHTML = orig;
-      }, 1800);
-    });
-  }
-
-  load();
-  render();
-  setInterval(tick, 1000 / TICK_HZ);
+  loadStats();
+  newRound();
 })();
 
 /* ══ 15. BACK TO TOP ══ */

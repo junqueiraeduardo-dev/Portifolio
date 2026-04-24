@@ -290,124 +290,44 @@
     <div class="container">
       <div class="section-header reveal">
         <p class="section-label">Bônus</p>
-        <h2 class="section-title scroll-float">Simulador de <span class="gradient-text">Programador</span></h2>
-        <p class="section-desc">Clique para escrever código. Compre upgrades. Salve o progresso e volte amanhã para continuar.</p>
+        <h2 class="section-title scroll-float">Jogo da <span class="gradient-text">Forca</span></h2>
+        <p class="section-desc">Adivinhe a palavra (tema: programação) — uma letra por vez. Você tem 6 tentativas erradas.</p>
       </div>
 
       <div class="game__layout reveal">
 
-        <!-- ── Painel principal: clicker ── -->
+        <!-- ── Painel principal ── -->
         <div class="game__main">
-          <div class="game__display">
-            <div class="game__counter">
-              <span class="game__loc" id="locCount">0</span>
-              <span class="game__loc-label">linhas de código</span>
-            </div>
-            <div class="game__lps">
-              <span class="game__lps-icon"></span>
-              <span id="lpsCount">0</span> LoC/s
-            </div>
+          <div class="hangman" id="hangmanWrap" data-wrong="0">
+            <svg viewBox="0 0 200 220" width="170" height="190" aria-hidden="true">
+              <line class="hangman__base" x1="20"  y1="210" x2="180" y2="210"/>
+              <line class="hangman__pole" x1="50"  y1="210" x2="50"  y2="20"/>
+              <line class="hangman__top"  x1="50"  y1="20"  x2="130" y2="20"/>
+              <line class="hangman__rope" x1="130" y1="20"  x2="130" y2="50"/>
+              <circle class="hangman__part" data-part="head"  cx="130" cy="65" r="15"/>
+              <line   class="hangman__part" data-part="body"  x1="130" y1="80"  x2="130" y2="140"/>
+              <line   class="hangman__part" data-part="arm-l" x1="130" y1="100" x2="105" y2="120"/>
+              <line   class="hangman__part" data-part="arm-r" x1="130" y1="100" x2="155" y2="120"/>
+              <line   class="hangman__part" data-part="leg-l" x1="130" y1="140" x2="110" y2="170"/>
+              <line   class="hangman__part" data-part="leg-r" x1="130" y1="140" x2="150" y2="170"/>
+            </svg>
           </div>
 
-          <button class="game__btn" id="clickBtn" type="button" aria-label="Escrever uma linha de código">
-            <span class="game__btn-mono">{ <span class="game__btn-cursor">_</span> }</span>
-            <span class="game__btn-label">Escrever código</span>
-          </button>
+          <div class="hangman__word" id="wordDisplay" aria-live="polite"></div>
 
-          <div class="game__meta">
-            <span>Cliques: <strong id="totalClicks">0</strong></span>
+          <div class="hangman__feedback" id="gameFeedback" aria-live="polite"></div>
+
+          <div class="hangman__meta">
+            <span>Tentativas: <strong id="livesLeft">6</strong></span>
             <span class="game__meta-dot"></span>
-            <button class="game__save" id="saveBtn" type="button" aria-label="Salvar progresso">
-              <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" aria-hidden="true"><path d="M19 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11l5 5v11a2 2 0 0 1-2 2z"/><polyline points="17 21 17 13 7 13 7 21"/><polyline points="7 3 7 8 15 8"/></svg>
-              Salvar
-            </button>
+            <span>Vitórias: <strong id="winsCount">0</strong></span>
             <span class="game__meta-dot"></span>
-            <button class="game__reset" id="resetBtn" type="button">Resetar</button>
+            <button class="game__reset" id="newWordBtn" type="button">Nova palavra</button>
           </div>
         </div>
 
-        <!-- ── Lista de upgrades ── -->
-        <div class="game__upgrades">
-
-          <button class="game__upgrade" type="button" data-buy="coffee" disabled>
-            <div class="game__upgrade-icon">☕</div>
-            <div class="game__upgrade-info">
-              <h3 class="game__upgrade-name">Café</h3>
-              <p class="game__upgrade-desc">Cafeína no sangue, código no editor</p>
-              <span class="game__upgrade-rate">+0.5 LoC/s cada</span>
-            </div>
-            <div class="game__upgrade-side">
-              <span class="game__upgrade-cost" data-cost="coffee">15</span>
-              <span class="game__upgrade-count">x<span data-count="coffee">0</span></span>
-            </div>
-          </button>
-
-          <button class="game__upgrade" type="button" data-buy="keyboard" disabled>
-            <div class="game__upgrade-icon">⌨️</div>
-            <div class="game__upgrade-info">
-              <h3 class="game__upgrade-name">Teclado mecânico</h3>
-              <p class="game__upgrade-desc">Click clack click clack</p>
-              <span class="game__upgrade-rate">+3 LoC/s cada</span>
-            </div>
-            <div class="game__upgrade-side">
-              <span class="game__upgrade-cost" data-cost="keyboard">100</span>
-              <span class="game__upgrade-count">x<span data-count="keyboard">0</span></span>
-            </div>
-          </button>
-
-          <button class="game__upgrade" type="button" data-buy="cloud" disabled>
-            <div class="game__upgrade-icon">☁️</div>
-            <div class="game__upgrade-info">
-              <h3 class="game__upgrade-name">Servidor na nuvem</h3>
-              <p class="game__upgrade-desc">CI/CD trabalhando por você 24/7</p>
-              <span class="game__upgrade-rate">+25 LoC/s cada</span>
-            </div>
-            <div class="game__upgrade-side">
-              <span class="game__upgrade-cost" data-cost="cloud">1.1K</span>
-              <span class="game__upgrade-count">x<span data-count="cloud">0</span></span>
-            </div>
-          </button>
-
-          <button class="game__upgrade" type="button" data-buy="startup" disabled>
-            <div class="game__upgrade-icon">🏢</div>
-            <div class="game__upgrade-info">
-              <h3 class="game__upgrade-name">Startup</h3>
-              <p class="game__upgrade-desc">Seu próprio CNPJ, seu próprio ritmo</p>
-              <span class="game__upgrade-rate">+120 LoC/s cada</span>
-            </div>
-            <div class="game__upgrade-side">
-              <span class="game__upgrade-cost" data-cost="startup">12K</span>
-              <span class="game__upgrade-count">x<span data-count="startup">0</span></span>
-            </div>
-          </button>
-
-          <button class="game__upgrade" type="button" data-buy="employee" disabled>
-            <div class="game__upgrade-icon">👥</div>
-            <div class="game__upgrade-info">
-              <h3 class="game__upgrade-name">Funcionários</h3>
-              <p class="game__upgrade-desc">Delega, revisa, faz code review</p>
-              <span class="game__upgrade-rate">+800 LoC/s cada</span>
-            </div>
-            <div class="game__upgrade-side">
-              <span class="game__upgrade-cost" data-cost="employee">130K</span>
-              <span class="game__upgrade-count">x<span data-count="employee">0</span></span>
-            </div>
-          </button>
-
-          <button class="game__upgrade" type="button" data-buy="contract" disabled>
-            <div class="game__upgrade-icon">📋</div>
-            <div class="game__upgrade-info">
-              <h3 class="game__upgrade-name">Contrato corporativo</h3>
-              <p class="game__upgrade-desc">Grandes empresas, grandes projetos</p>
-              <span class="game__upgrade-rate">+6K LoC/s cada</span>
-            </div>
-            <div class="game__upgrade-side">
-              <span class="game__upgrade-cost" data-cost="contract">1.5M</span>
-              <span class="game__upgrade-count">x<span data-count="contract">0</span></span>
-            </div>
-          </button>
-
-        </div>
+        <!-- ── Teclado virtual ── -->
+        <div class="hangman__keyboard" id="keyboard" role="group" aria-label="Teclado para palpites"></div>
 
       </div>
     </div>
