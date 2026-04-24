@@ -7,21 +7,47 @@
 
 /* ══ 0. INTRO ══ */
 (function initIntro() {
-  const intro = document.getElementById('intro');
+  const intro    = document.getElementById('intro');
+  const counter  = document.getElementById('introCounter');
+  const progress = document.getElementById('introProgress');
   if (!intro) return;
+
   document.body.style.overflow = 'hidden';
 
+  // Counter runs 0→100 from 900ms to 2200ms (1300ms window)
+  const COUNT_START = 900;
+  const COUNT_END   = 2200;
+  const start = performance.now();
+
+  function tick(now) {
+    const elapsed = now - start;
+    if (elapsed < COUNT_START) { requestAnimationFrame(tick); return; }
+
+    const t = Math.min(1, (elapsed - COUNT_START) / (COUNT_END - COUNT_START));
+    // Ease out cubic
+    const ease = 1 - Math.pow(1 - t, 3);
+    const val  = Math.round(ease * 100);
+
+    if (counter)  counter.textContent  = val;
+    if (progress) progress.style.width = val + '%';
+
+    if (t < 1) { requestAnimationFrame(tick); }
+  }
+  requestAnimationFrame(tick);
+
+  // Bars finish exiting at ~2.3s + 5*55ms + 550ms ≈ 3.1s → remove at 3.3s
   function dismiss() {
-    intro.classList.add('exit');
-    intro.addEventListener('transitionend', () => {
+    setTimeout(() => {
       intro.remove();
       document.body.style.overflow = '';
-    }, { once: true });
+    }, 3300);
   }
 
-  // Last letter at ~2.02s + 0.55s anim + 0.6s hold before exit
-  setTimeout(dismiss, 3200);
-  intro.addEventListener('click', dismiss, { once: true });
+  dismiss();
+  intro.addEventListener('click', () => {
+    intro.remove();
+    document.body.style.overflow = '';
+  }, { once: true });
 })();
 
 

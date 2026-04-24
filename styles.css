@@ -127,96 +127,115 @@ ul { list-style: none; }
   position: fixed;
   inset: 0;
   z-index: 10000;
-  background: #050508;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  transform: translateY(0);
-  transition: transform 0.7s cubic-bezier(0.76, 0, 0.24, 1);
+  overflow: hidden;
+  pointer-events: all;
 }
 
-.intro.exit { transform: translateY(-100%); }
+/* ── Horizontal bars (Option E) ── */
+.intro__bars {
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+}
 
+.intro__bar {
+  position: absolute;
+  left: 0; right: 0;
+  height: calc(100% / 6);
+  top: calc(var(--bi) * (100% / 6));
+  background: #09051a;
+  transform: translateX(-101%);
+  will-change: transform;
+  animation:
+    introBarIn  0.6s cubic-bezier(0.76, 0, 0.24, 1) calc(var(--bi) * 65ms)         both,
+    introBarOut 0.55s cubic-bezier(0.76, 0, 0.24, 1) calc(2.3s + var(--bi) * 55ms) both;
+}
+
+/* Subtle gradient tint alternating bars */
+.intro__bar:nth-child(odd)  { background: #0c061e; }
+.intro__bar:nth-child(even) { background: #07040f; }
+
+@keyframes introBarIn  { from { transform: translateX(-101%); } to { transform: translateX(0); } }
+@keyframes introBarOut { from { transform: translateX(0); }    to { transform: translateX(101%); } }
+
+/* ── Scene: name + counter (Option C) ── */
 .intro__scene {
+  position: absolute;
+  inset: 0;
+  z-index: 2;
   display: flex;
   flex-direction: column;
   align-items: center;
-  text-align: center;
-}
-
-.intro__line1,
-.intro__line2 {
-  display: flex;
   justify-content: center;
-  perspective: 600px;
-}
-
-.intro__line1 { gap: 0.02em; }
-.intro__line2 { gap: 0.15em; }
-
-.intro__letter {
-  display: inline-block;
-  line-height: 1;
-  will-change: transform, opacity;
+  text-align: center;
+  padding: 0 24px;
   opacity: 0;
-  animation: letterReveal 0.55s cubic-bezier(0.22, 1, 0.36, 1) both;
+  animation: introSceneIn 0.5s ease 0.6s forwards;
 }
 
-.intro__line1 .intro__letter {
+@keyframes introSceneIn { to { opacity: 1; } }
+
+.intro__name {
   font-family: var(--font-heading);
-  font-size: clamp(3.2rem, 11vw, 8rem);
+  font-size: clamp(0.7rem, 2vw, 1rem);
+  font-weight: 600;
+  letter-spacing: 0.3em;
+  text-transform: uppercase;
+  background: var(--grad-primary);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  margin: 0 0 20px;
+}
+
+.intro__count-wrap {
+  display: flex;
+  align-items: baseline;
+  gap: 4px;
+  line-height: 1;
+}
+
+.intro__counter {
+  font-family: var(--font-heading);
+  font-size: clamp(5rem, 18vw, 11rem);
   font-weight: 900;
   color: #fff;
-  animation-delay: calc(var(--i, 0) * 0.1s + 0.1s);
+  font-variant-numeric: tabular-nums;
+  line-height: 1;
 }
 
-.intro__line2 .intro__letter {
+.intro__pct {
   font-family: var(--font-heading);
-  font-size: clamp(1rem, 3vw, 2.1rem);
+  font-size: clamp(1.8rem, 5vw, 3.5rem);
   font-weight: 700;
   background: var(--grad-primary);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   background-clip: text;
-  animation-delay: calc(var(--i, 0) * 0.08s + 0.9s);
 }
 
-@keyframes letterReveal {
-  from {
-    opacity: 0;
-    transform: translateY(-50px) rotateX(70deg);
-  }
-  to {
-    opacity: 1;
-    transform: translateY(0) rotateX(0deg);
-  }
+.intro__progress {
+  width: min(260px, 60vw);
+  height: 2px;
+  background: rgba(255,255,255,0.1);
+  border-radius: 2px;
+  margin: 28px 0 24px;
+  overflow: hidden;
 }
 
-.intro__divider {
-  height: 1px;
-  width: min(320px, 70vw);
+.intro__progress-fill {
+  height: 100%;
+  width: 0%;
   background: var(--grad-primary);
-  margin: 16px 0 14px;
-  transform: scaleX(0);
-  transform-origin: left center;
-  animation: dividerGrow 0.5s ease 0.82s forwards;
+  border-radius: 2px;
+  transition: width 0.1s linear;
 }
-
-@keyframes dividerGrow { to { transform: scaleX(1); } }
 
 .intro__sub {
-  font-size: 0.68rem;
-  letter-spacing: 0.24em;
+  font-size: 0.65rem;
+  letter-spacing: 0.22em;
   text-transform: uppercase;
   color: var(--clr-text-muted);
-  margin-top: 18px;
-  opacity: 0;
-  transform: translateY(8px);
-  animation: introFadeUp 0.5s ease 2.1s forwards;
-}
-
-@keyframes introFadeUp {
-  to { opacity: 1; transform: translateY(0); }
 }
 
 @media (prefers-reduced-motion: reduce) {
