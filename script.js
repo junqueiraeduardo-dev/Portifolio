@@ -19,8 +19,8 @@
     }, { once: true });
   }
 
-  // Bar fill: 1.2s delay + 1.2s duration = 2.4s, add short buffer
-  setTimeout(dismiss, 2700);
+  // Last letter at ~2.02s + 0.55s anim + 0.6s hold before exit
+  setTimeout(dismiss, 3200);
   intro.addEventListener('click', dismiss, { once: true });
 })();
 
