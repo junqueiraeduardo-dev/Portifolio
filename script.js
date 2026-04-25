@@ -672,18 +672,20 @@
   const STORAGE_KEY = 'eduardo.hangman.v1';
   const MAX_WRONG   = 6;
 
-  const WORDS = [
-    'JAVASCRIPT', 'HTML', 'CSS', 'FUNCAO', 'VARIAVEL', 'CONSTANTE', 'ARRAY',
-    'OBJETO', 'METODO', 'CLASSE', 'COMPONENTE', 'INTERFACE', 'ALGORITMO',
-    'BACKEND', 'FRONTEND', 'SERVIDOR', 'NUVEM', 'REPOSITORIO', 'COMMIT',
-    'DEPLOY', 'FRAMEWORK', 'BIBLIOTECA', 'COMPILADOR', 'PROTOCOLO',
-    'ENDPOINT', 'RESPONSIVO', 'BROWSER', 'TERMINAL', 'TECLADO', 'CODIGO',
-    'PROGRAMA', 'MONITOR', 'DESENVOLVEDOR', 'PORTFOLIO', 'DESIGN',
-    'INTERATIVO', 'PROJETO', 'CARREIRA', 'INATEL', 'PROMISE', 'FETCH',
-    'CALLBACK', 'TYPESCRIPT', 'CONSOLE', 'EVENTO', 'PARAMETRO',
-    'ARGUMENTO', 'BOOLEANO', 'STRING', 'NUMERO', 'INTEGER', 'OBJETO',
-    'PROTOTYPE', 'MODULO', 'IMPORT', 'EXPORT', 'ASYNC', 'AWAIT', 'BUFFER',
+  const FALLBACK_WORDS = [
+    'CACHORRO', 'FUTEBOL', 'MONTANHA', 'CARNAVAL', 'VERMELHO',
+    'MEDICO', 'JANELA', 'FOGUETE', 'REPUBLICA', 'AMAZONIA',
   ];
+
+  let WORDS = FALLBACK_WORDS;
+
+  fetch('./words.json')
+    .then(r => r.json())
+    .then(data => {
+      const all = Object.values(data).flat();
+      if (all.length > 0) WORDS = all;
+    })
+    .catch(() => {});
 
   const ALPHABET = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ';
 
@@ -711,9 +713,11 @@
   }
 
   function pickWord() {
+    const pool = WORDS.filter(w => /^[A-Z-]+$/.test(w));
+    const source = pool.length > 0 ? pool : WORDS;
     let w;
-    do { w = WORDS[Math.floor(Math.random() * WORDS.length)]; }
-    while (w === state.word && WORDS.length > 1);
+    do { w = source[Math.floor(Math.random() * source.length)]; }
+    while (w === state.word && source.length > 1);
     return w;
   }
 
